@@ -50,6 +50,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Configuración del puerto
 const PORT = process.env.PORT || 10000;
 
+app.get('/healthz', (req, res) => {
+    res.status(200).send('OK');
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
