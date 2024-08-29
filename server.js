@@ -37,12 +37,34 @@ const swaggerOptions = {
     },
     servers: [
       {
+        url: 'https://proy6-backend.onrender.com',
+        description: 'Servidor de producción',
+      },
+      {
         url: 'http://localhost:5000',
+        description: 'Servidor de desarrollo',
+      },
+  
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
       },
     ],
   },
   apis: ['./routes/*.js'],
 };
+
+
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));

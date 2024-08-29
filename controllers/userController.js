@@ -71,5 +71,3 @@ exports.verifyToken = (req, res) => {
   };
   
   
-
-// Otros controladores como updateUser, verifyToken, etc.
