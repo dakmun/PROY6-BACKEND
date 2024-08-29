@@ -40,16 +40,21 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.verifyToken = (req, res) => {
-    const token = req.header('x-auth-token');
-    if (!token) return res.status(401).json({ msg: 'No token, autorización denegada' });
-  
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  // Busca el token en el encabezado 'Authorization'
+  const token = req.header('Authorization');
+
+  // Verifica que el token exista
+  if (!token) return res.status(401).json({ msg: 'No token, autorización denegada' });
+
+  try {
+      // Elimina la palabra 'Bearer ' y verifica el token
+      const decoded = jwt.verify(token.split(' ')[1], process.env.JWT_SECRET);
       res.status(200).json({ valid: true, userId: decoded.id });
-    } catch (err) {
+  } catch (err) {
       res.status(401).json({ msg: 'Token no válido' });
-    }
-  };
+  }
+};
+
 
   exports.updateUser = async (req, res) => {
     const { nombre, email, password } = req.body;
